@@ -1,8 +1,11 @@
 import { useState } from "react";
 import useStore from "../Store/store.js";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 function Login() {
-  const { api, setToken } = useStore();
+  const navigate = useNavigate();
+  const { api, token, setToken } = useStore();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +47,9 @@ function Login() {
       toast.error(error.response.data.message);
     }
   };
+  useEffect(() => {
+    if (token) navigate("/");
+  }, [token]);
   return (
     <form className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800">
       <div className="inline-flex items-center gap-2 mb-2 mt-10">
