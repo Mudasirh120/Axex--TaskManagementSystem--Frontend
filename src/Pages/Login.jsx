@@ -48,7 +48,7 @@ function Login() {
     }
   };
   useEffect(() => {
-    if (token) navigate("/");
+    if (token) navigate("/home/dashboard");
   }, [token]);
   return (
     <form className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800">

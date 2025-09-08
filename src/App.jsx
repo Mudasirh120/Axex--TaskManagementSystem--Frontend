@@ -12,14 +12,14 @@ function App() {
     <div>
       <ToastContainer autoClose={500} />
       <Routes>
-        <Route path="/" element={<Home />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/create" element={<CreateTask />} />
-          <Route path="/pending" element={<PendingTasks />} />
-          <Route path="/completed" element={<FinishedTasks />} />
-          <Route path="/edit" element={<EditTask />} />
+        <Route path="/home" element={<Home />}>
+          <Route path="/home/dashboard" element={<Dashboard />} />
+          <Route path="/home/create" element={<CreateTask />} />
+          <Route path="/home/pending" element={<PendingTasks />} />
+          <Route path="/home/completed" element={<FinishedTasks />} />
+          <Route path="/home/edit" element={<EditTask />} />
         </Route>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </div>
   );

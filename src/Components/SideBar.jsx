@@ -15,25 +15,25 @@ function SideBar() {
       </div>
       <div className="flex flex-col items-center mb-10 w-full">
         <NavLink
-          to={"/dashboard"}
+          to={"/home/dashboard"}
           className={`border border-x-0 border-y-2 p-2 w-full text-center`}
         >
           Dashboard
         </NavLink>
         <NavLink
-          to={"/create"}
+          to={"/home/create"}
           className={`border border-x-0 border-y-2 p-2 w-full text-center`}
         >
           Create
         </NavLink>
         <NavLink
-          to={"/pending"}
+          to={"/home/pending"}
           className={`border border-x-0 border-y-2 p-2 w-full text-center`}
         >
           Pending Tasks
         </NavLink>
         <NavLink
-          to={"/completed"}
+          to={"/home/completed"}
           className={`border border-x-0 border-y-2 p-2 w-full text-center`}
         >
           Completed Tasks
