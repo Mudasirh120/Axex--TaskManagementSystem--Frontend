@@ -5,9 +5,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 function Login({ role }) {
   const navigate = useNavigate();
-  const { api, token, setToken } = useStore();
+  const { api, token, setToken, checkAuth } = useStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const fetchAuth = async () => {
+    const res = await checkAuth(role);
+    console.log(res.data.success);
+    setToken(res.data.success);
+  };
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -30,7 +35,8 @@ function Login({ role }) {
     }
   };
   useEffect(() => {
-    if (token) navigate("/home/dashboard");
+    fetchAuth();
+    if (token) navigate(`/${role}/home`);
   }, [token]);
   return (
     <form
@@ -70,7 +76,7 @@ function Login({ role }) {
           onSubmitHandler(e);
         }}
         type="submit"
-        className="text-white bg-black font-light px-8 py-2 mt-4 font-semibold"
+        className="text-white bg-black px-8 py-2 mt-4 font-semibold"
       >
         Login
       </button>

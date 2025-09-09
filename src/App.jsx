@@ -7,17 +7,26 @@ import CreateTask from "./Pages/CreateTask";
 import PendingTasks from "./Pages/PendingTasks";
 import FinishedTasks from "./Pages/FinishedTasks";
 import EditTask from "./Pages/EditTask";
+import UsersList from "./Pages/UsersList";
 function App() {
   return (
     <div>
       <ToastContainer autoClose={800} />
       <Routes>
-        <Route path="/home" element={<Home />}>
-          <Route path="/home/dashboard" element={<Dashboard />} />
-          <Route path="/home/create" element={<CreateTask />} />
-          <Route path="/home/pending" element={<PendingTasks />} />
-          <Route path="/home/completed" element={<FinishedTasks />} />
-          <Route path="/home/edit" element={<EditTask />} />
+        <Route path="/admin/home" element={<Home />}>
+          <Route path="/admin/home/dashboard" element={<Dashboard />} />
+          <Route
+            path="/admin/home/clients"
+            element={<UsersList role={"client"} />}
+          />
+          <Route
+            path="/admin/home/assistants"
+            element={<UsersList role={"assistant"} />}
+          />
+          <Route path="/admin/home/create" element={<CreateTask />} />
+          <Route path="/admin/home/pending" element={<PendingTasks />} />
+          <Route path="/admin/home/completed" element={<FinishedTasks />} />
+          <Route path="/admin/home/edit" element={<EditTask />} />
         </Route>
         <Route path="/" element={<Login role={"client"} />} />
         <Route path="/assistant" element={<Login role={"assistant"} />} />

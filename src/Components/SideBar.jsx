@@ -1,6 +1,15 @@
-import { NavLink } from "react-router";
-
+import { NavLink, useLocation, useNavigate } from "react-router";
+import useStore from "../Store/store";
+import { useEffect } from "react";
 function SideBar() {
+  const { logOut, token, setToken } = useStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const routes = location.pathname.split("/");
+  const role = routes[1];
+  useEffect(() => {
+    if (!token) navigate(`/${role}`);
+  });
   return (
     <div className="h-screen bg-teal-700 flex flex-col items-center justify-center">
       <div className="flex flex-col items-center mb-10 gap-2">
@@ -43,6 +52,8 @@ function SideBar() {
         className="bg-red-600 text-white px-4 py-2 rounded-md"
         onSubmit={(e) => {
           e.preventDefault();
+          const res = logOut(role);
+          setToken(res.data.success);
         }}
       >
         Log Out
