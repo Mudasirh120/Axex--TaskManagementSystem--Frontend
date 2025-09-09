@@ -10,7 +10,7 @@ import EditTask from "./Pages/EditTask";
 function App() {
   return (
     <div>
-      <ToastContainer autoClose={500} />
+      <ToastContainer autoClose={800} />
       <Routes>
         <Route path="/home" element={<Home />}>
           <Route path="/home/dashboard" element={<Dashboard />} />
@@ -19,7 +19,9 @@ function App() {
           <Route path="/home/completed" element={<FinishedTasks />} />
           <Route path="/home/edit" element={<EditTask />} />
         </Route>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login role={"client"} />} />
+        <Route path="/assistant" element={<Login role={"assistant"} />} />
+        <Route path="/admin" element={<Login role={"admin"} />} />
       </Routes>
     </div>
   );

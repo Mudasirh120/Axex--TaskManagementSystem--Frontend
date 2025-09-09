@@ -8,5 +8,6 @@ const useStore = create((set) => ({
     baseURL: backendUrl,
     withCredentials: true,
   }),
+  checkAuth: () => {},
 }));
 export default useStore;
