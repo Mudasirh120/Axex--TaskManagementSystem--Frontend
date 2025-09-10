@@ -8,29 +8,47 @@ import PendingTasks from "./Pages/PendingTasks";
 import FinishedTasks from "./Pages/FinishedTasks";
 import EditTask from "./Pages/EditTask";
 import UsersList from "./Pages/UsersList";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import useStore from "./Store/store";
+import { useEffect } from "react";
+import CreateUser from "./Pages/CreateUser";
 function App() {
+  const { checkAuth } = useStore();
+  useEffect(() => {
+    (async () => {
+      const res = await checkAuth();
+      console.log(res);
+    })();
+  }, []);
   return (
     <div>
       <ToastContainer autoClose={800} />
       <Routes>
-        <Route path="/admin/home" element={<Home />}>
-          <Route path="/admin/home/dashboard" element={<Dashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              {" "}
+              <Home />{" "}
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route
-            path="/admin/home/clients"
+            path="/admin/clients"
             element={<UsersList role={"client"} />}
           />
           <Route
-            path="/admin/home/assistants"
+            path="/admin/assistants"
             element={<UsersList role={"assistant"} />}
           />
-          <Route path="/admin/home/create" element={<CreateTask />} />
-          <Route path="/admin/home/pending" element={<PendingTasks />} />
-          <Route path="/admin/home/completed" element={<FinishedTasks />} />
-          <Route path="/admin/home/edit" element={<EditTask />} />
+          <Route path="/admin/create" element={<CreateUser />} />
+          {/* <Route path="/admin/create" element={<CreateTask />} /> */}
+          <Route path="/admin/pending" element={<PendingTasks />} />
+          <Route path="/admin/completed" element={<FinishedTasks />} />
+          <Route path="/admin/edit" element={<EditTask />} />
         </Route>
-        <Route path="/" element={<Login role={"client"} />} />
-        <Route path="/assistant" element={<Login role={"assistant"} />} />
-        <Route path="/admin" element={<Login role={"admin"} />} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </div>
   );

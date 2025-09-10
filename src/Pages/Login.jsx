@@ -1,50 +1,64 @@
 import { useState } from "react";
 import useStore from "../Store/store.js";
-import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-function Login({ role }) {
+function Login() {
+  const [role, setRole] = useState("client");
   const navigate = useNavigate();
-  const { api, token, setToken, checkAuth } = useStore();
+  const { logIn, token, type } = useStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const fetchAuth = async () => {
-    const res = await checkAuth(role);
-    console.log(res.data.success);
-    setToken(res.data.success);
-  };
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    try {
-      const res = await api.post(`/api/${role}/login`, {
-        email,
-        password,
-        role,
-      });
-      if (res.data.success) {
-        setToken(true);
-        toast.success(res.data.message);
-        setEmail("");
-        setPassword("");
-      } else {
-        toast.error(res.response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+    const res = await logIn(`/api/${role}/login`, { email, password, role });
+    if (res.data.success) {
+      setEmail("");
+      setPassword("");
+      navigate(`/${role}`);
     }
   };
   useEffect(() => {
-    fetchAuth();
-    if (token) navigate(`/${role}/home`);
-  }, [token]);
+    if (token) navigate(`/${type}`);
+  }, []);
   return (
     <form
       className="flex flex-col items-center justify-center w-[90%] h-screen sm:max-w-96 m-auto gap-4 text-gray-800"
       encType="multipart/form-data"
     >
       <div className="inline-flex items-center gap-2 mb-2 mt-10">
-        <p className="prata-regular text-3xl">Login</p>
+        <p className="prata-regular text-3xl font-semibold">Welcome Back</p>
+      </div>
+      <div className="grid grid-cols-3 gap-2">
+        <div
+          onClick={() => {
+            setRole("client");
+          }}
+          className={`${
+            role == "client" ? "text-white bg-black" : ""
+          } p-2 border border-gray-600 rounded text-center`}
+        >
+          Client
+        </div>
+        <div
+          onClick={() => {
+            setRole("assistant");
+          }}
+          className={`${
+            role == "assistant" ? "text-white bg-black" : ""
+          } p-2 border border-gray-600 rounded text-center`}
+        >
+          Assistant
+        </div>
+        <div
+          onClick={() => {
+            setRole("admin");
+          }}
+          className={`${
+            role == "admin" ? "text-white bg-black" : ""
+          } p-2 border border-gray-600 rounded text-center`}
+        >
+          Admin
+        </div>
       </div>
       <input
         name="email"
