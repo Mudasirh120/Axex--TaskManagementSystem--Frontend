@@ -18,6 +18,26 @@ const useStore = create((set, get) => ({
     set({ type: res.data.role });
     return res;
   },
+  register: async (endpoint, data) => {
+    try {
+      const api = get().api;
+      const res = await api.post(endpoint, data);
+      if (res) {
+        set({ token: res.data.success });
+        set({ type: res.data.role });
+        toast.success(res.data.message);
+        return res;
+      } else {
+        set({ token: null });
+        set({ type: null });
+        toast.error(res.response.data.message);
+        return res;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  },
   logIn: async (endpoint, data) => {
     try {
       const api = get().api;

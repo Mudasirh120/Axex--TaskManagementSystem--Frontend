@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import useStore from "../Store/store";
+import Input from "../Components/Input";
 function CreateUser() {
   const [role, setRole] = useState("client");
   const navigate = useNavigate();
-  const { logIn, token, type } = useStore();
+  const { logIn, token, type, register } = useStore();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [image, setImage] = useState(null);
@@ -13,6 +14,21 @@ function CreateUser() {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [password, setPassword] = useState("");
+  const submit = async () => {
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("name", name);
+    formData.append("pfp", image);
+    formData.append("password", password);
+    formData.append("role", role);
+    formData.append("address", address);
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("country", country);
+    console.log("");
+    const res = await register(`/api/${role}/register`, formData);
+    console.log(res);
+  };
   return (
     <div>
       <form
@@ -57,100 +73,76 @@ function CreateUser() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <input id="pfp" type="file" hidden />
+          <input
+            id="pfp"
+            name="pfp"
+            type="file"
+            hidden
+            onChange={(e) => {
+              setImage(e.target.files[0]);
+            }}
+          />
           <label htmlFor="pfp" className="cursor-pointer">
             <img
-              src="/addImage.png"
+              src={image ? URL.createObjectURL(image) : "/addImage.png"}
               alt="Pfp"
               className="rounded h-20 w-20 object-contain"
             />
           </label>
         </div>
-        <input
-          name="name"
-          required
-          type="name"
-          className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
-          placeholder="Name"
+        <Input
+          type={"text"}
           value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          setValue={setName}
+          placeholder={"Name"}
         />
-        <input
-          name="email"
-          required
-          type="email"
-          className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
-          placeholder="Email"
+        <Input
+          type={"email"}
           value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
+          setValue={setEmail}
+          placeholder={"Email"}
         />
-        <input
-          name="password"
-          required
-          type="password"
-          className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
-          placeholder="Password"
+        <Input
+          type={"password"}
           value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+          setValue={setPassword}
+          placeholder={"Password"}
         />
-        <input
-          name="address"
-          required
-          type="text"
-          className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
-          placeholder="Street Address"
+        <Input
+          type={"text"}
           value={address}
-          onChange={(e) => {
-            setAddress(e.target.value);
-          }}
+          setValue={setAddress}
+          placeholder={"Address"}
         />
         <div className="grid grid-cols-2 gap-2 w-full">
-          <input
-            name="city"
-            required
-            type="text"
-            className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
-            placeholder="City"
+          <Input
+            type={"text"}
             value={city}
-            onChange={(e) => {
-              setCity(e.target.value);
-            }}
+            setValue={setCity}
+            placeholder={"City"}
           />
-          <input
-            name="state"
-            required
-            type="text"
-            className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
-            placeholder="State"
+          <Input
+            type={"text"}
             value={state}
-            onChange={(e) => {
-              setState(e.target.value);
-            }}
+            setValue={setState}
+            placeholder={"State"}
           />
         </div>
-        <input
-          name="country"
-          required
-          type="text"
-          className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
-          placeholder="Country"
+        <Input
+          type={"text"}
           value={country}
-          onChange={(e) => {
-            setCountry(e.target.value);
-          }}
+          setValue={setCountry}
+          placeholder={"Country"}
         />
         <button
-          onClick={() => {}}
+          onClick={(e) => {
+            e.preventDefault();
+            submit();
+          }}
           type="submit"
           className="text-white bg-black px-8 py-2 mt-1 font-semibold"
         >
-          Add User
+          Add {role.charAt(0).toUpperCase() + role.slice(1)}
         </button>
       </form>
     </div>

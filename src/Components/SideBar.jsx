@@ -20,7 +20,6 @@ function SideBar() {
             className="rounded-full h-24 w-24 object-cover "
           />
           <p className=" text-3xl font-bold">User Name</p>
-          <p className="">User Email</p>
           <p className="">Role</p>
         </div>
         <div className="flex flex-col items-center mb-10 w-full">
