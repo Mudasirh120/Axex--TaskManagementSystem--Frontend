@@ -7,11 +7,12 @@ function SideBar() {
   const navigate = useNavigate();
   const routes = location.pathname.split("/");
   const role = routes[1];
+  useEffect(() => {});
   useEffect(() => {
     if (!token) navigate("/");
   }, [token]);
   return (
-    <div className="h-screen flex flex-col items-center justify-between border border-r-slate-300 py-2">
+    <div className="h-screen flex flex-col items-center justify-between border-r border-r-slate-300 py-2">
       <div className="w-full">
         <div className="flex flex-col items-center mb-10 gap-2">
           <img
@@ -26,7 +27,7 @@ function SideBar() {
           <NavLink
             to={"/admin/create"}
             className={({ isActive }) =>
-              `border-gray-400 border-x-0 border-y-1 p-2 w-full text-center ${
+              `border-slate-100 border-y p-2 w-full text-center ${
                 isActive ? "bg-gray-300" : "text-black"
               }`
             }
@@ -36,7 +37,7 @@ function SideBar() {
           <NavLink
             to={"/admin/view"}
             className={({ isActive }) =>
-              `border-gray-400 border-x-0 border-y-1 p-2 w-full text-center ${
+              `border-slate-100 border-x-0 border-y-1 p-2 w-full text-center ${
                 isActive ? "bg-gray-300" : "text-black"
               }`
             }

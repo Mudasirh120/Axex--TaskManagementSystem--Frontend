@@ -7,11 +7,12 @@ import CreateTask from "./Pages/CreateTask";
 import PendingTasks from "./Pages/PendingTasks";
 import FinishedTasks from "./Pages/FinishedTasks";
 import EditTask from "./Pages/EditTask";
-import UsersList from "./Pages/UsersList";
+import ViewUser from "./Pages/ViewUser";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import useStore from "./Store/store";
 import { useEffect } from "react";
 import CreateUser from "./Pages/CreateUser";
+import SingleProfile from "./Pages/SingleProfile";
 function App() {
   const { checkAuth } = useStore();
   useEffect(() => {
@@ -34,15 +35,9 @@ function App() {
           }
         >
           <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route
-            path="/admin/clients"
-            element={<UsersList role={"client"} />}
-          />
-          <Route
-            path="/admin/assistants"
-            element={<UsersList role={"assistant"} />}
-          />
           <Route path="/admin/create" element={<CreateUser />} />
+          <Route path="/admin/view" element={<ViewUser />} />
+          <Route path="/admin/:role/profile/:id" element={<SingleProfile />} />
           {/* <Route path="/admin/create" element={<CreateTask />} /> */}
           <Route path="/admin/pending" element={<PendingTasks />} />
           <Route path="/admin/completed" element={<FinishedTasks />} />

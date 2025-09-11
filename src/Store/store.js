@@ -5,6 +5,8 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const useStore = create((set, get) => ({
   type: null,
   token: null,
+  loading: true,
+  setLoading: (val) => set({ loading: val }),
   setToken: (val) => set({ token: val }),
   setType: (val) => set({ type: val }),
   api: axios.create({
@@ -17,6 +19,19 @@ const useStore = create((set, get) => ({
     set({ token: res.data.success });
     set({ type: res.data.role });
     return res;
+  },
+  getUsers: async (role) => {
+    try {
+      const api = get().api;
+      const res = await api.get(`/api/user/getAllUsers/${role}`);
+      if (!res) {
+        toast.error(res.response.data.message);
+      }
+      return res;
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   },
   register: async (endpoint, data) => {
     try {

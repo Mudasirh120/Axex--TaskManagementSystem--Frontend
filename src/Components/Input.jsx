@@ -1,9 +1,9 @@
-function Input({ type, value, setValue, placeholder }) {
+function Input({ type, value, setValue, placeholder, required }) {
   return (
     <div className="relative w-full">
       <input
         name={placeholder.toLowerCase()}
-        required
+        required={required}
         type={type}
         className="w-full px-3 py-2 border border-gray-800 placeholder:text-gray-600"
         placeholder={placeholder}
@@ -12,9 +12,13 @@ function Input({ type, value, setValue, placeholder }) {
           setValue(e.target.value);
         }}
       />
-      <span className="absolute top-0 right-0 h-full px-3 py-2 pointer-events-none text-red-800 font-bold">
-        *
-      </span>
+      {required ? (
+        <span className="absolute top-0 right-0 h-full px-3 py-2 pointer-events-none text-red-800 font-bold">
+          *
+        </span>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
